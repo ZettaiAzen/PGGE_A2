@@ -16,9 +16,13 @@ namespace PGGE
 
             public GameObject mConnectionProgress;
             public GameObject mBtnJoinRoom;
+            public GameObject mBtnReturn;
             public GameObject mInpPlayerName;
 
             bool isConnecting = false;
+
+            //for sound
+            AudioSource m_audioSource;
 
             void Awake()
             {
@@ -33,11 +37,28 @@ namespace PGGE
             void Start()
             {
                 mConnectionProgress.SetActive(false);
+                m_audioSource = GetComponent<AudioSource>();
+            }
+
+            IEnumerator PlaySoundAndConnect()
+            {
+                // playing sound
+                m_audioSource.Play();
+                // wait for audio source to finish playing
+                yield return new WaitForSeconds(m_audioSource.clip.length);
+                // connect to server later
+                Connect();
+            }
+
+            public void OnClickJoinRoom()
+            {
+                StartCoroutine(PlaySoundAndConnect());
             }
 
             public void Connect()
             {
                 mBtnJoinRoom.SetActive(false);
+                mBtnReturn.SetActive(false);
                 mInpPlayerName.SetActive(false);
                 mConnectionProgress.SetActive(true);
 
