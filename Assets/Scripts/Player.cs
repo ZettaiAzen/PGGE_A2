@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using PGGE.Patterns;
+using PGGE;
+using Photon.Pun;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +32,9 @@ public class Player : MonoBehaviour
     public LayerMask mPlayerMask;
     public Canvas mCanvas;
     public RectTransform mCrossHair;
+    public AudioSource mAudioSource;
+    public AudioClip mAudioClipGunShot;
+    public AudioClip mAudioClipReload;
 
 
     public GameObject mBulletPrefab;
@@ -37,6 +42,8 @@ public class Player : MonoBehaviour
 
     public int[] RoundsPerSecond = new int[3];
     bool[] mFiring = new bool[3];
+
+    private PhotonView mPhotonView;
 
 
     // Start is called before the first frame update
@@ -46,10 +53,18 @@ public class Player : MonoBehaviour
         mFsm.Add(new PlayerState_ATTACK(this));
         mFsm.Add(new PlayerState_RELOAD(this));
         mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
+
+        mPhotonView = gameObject.GetComponent<PhotonView>();
+
+        PlayerConstants.PlayerMask = mPlayerMask;
     }
 
     void Update()
     {
+
+        if (!mPhotonView.IsMine) return;
+        
+
         mFsm.Update();
         Aim();
 
@@ -168,6 +183,8 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
+        if (!mPhotonView.IsMine) return;
+
         mPlayerMovement.HandleInputs();
         mPlayerMovement.Move();
     }
@@ -179,7 +196,14 @@ public class Player : MonoBehaviour
 
     public void Reload()
     {
+        StartCoroutine(Coroutine_DelayReloadSound());
+    }
 
+    IEnumerator Coroutine_DelayReloadSound(float duration = 1.0f)
+    {
+        yield return new WaitForSeconds(duration);
+
+        mAudioSource.PlayOneShot(mAudioClipReload);
     }
 
     public void Fire(int id)
@@ -201,14 +225,16 @@ public class Player : MonoBehaviour
             Quaternion.LookRotation(dir) * Quaternion.AngleAxis(90.0f, Vector3.right));
 
         bullet.GetComponent<Rigidbody>().AddForce(dir * mBulletSpeed, ForceMode.Impulse);
+        mAudioSource.PlayOneShot(mAudioClipGunShot);
     }
 
     IEnumerator Coroutine_Firing(int id)
     {
         mFiring[id] = true;
-        FireBullet();
+        //FireBullet();
         yield return new WaitForSeconds(1.0f / RoundsPerSecond[id]);
         mFiring[id] = false;
+        // edited this
         mBulletsInMagazine -= 1;
     }
 }

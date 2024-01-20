@@ -185,7 +185,8 @@ public class PlayerState_ATTACK : PlayerState
 
         if (mPlayer.mAttackButtons[mAttackID])
         {
-            mPlayer.mAnimator.SetBool(mAttackName, true);
+            //mPlayer.mAnimator.SetBool(mAttackName, true);
+            mPlayer.mAnimator.SetTrigger(mAttackName);
             mPlayer.Fire(AttackID);
         }
         else
@@ -199,7 +200,7 @@ public class PlayerState_ATTACK : PlayerState
 
 public class PlayerState_RELOAD : PlayerState
 {
-    public float ReloadTime = 3.0f;
+    public float ReloadTime = 1.2f;
     float dt = 0.0f;
     public int previousState;
     public PlayerState_RELOAD(Player player) : base(player)
