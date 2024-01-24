@@ -120,8 +120,8 @@ public class PlayerMovement : MonoBehaviour
         mVelocity.y += Mathf.Sqrt(mJumpHeight * -2f * mGravity);
     }
 
-    private Vector3 HalfHeight;
-    private Vector3 tempHeight;
+    private Vector3 HalfHeight, tempHeight;
+
     void Crouch()
     {
         crouch = !crouch;
