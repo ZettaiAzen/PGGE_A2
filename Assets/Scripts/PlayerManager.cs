@@ -14,20 +14,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [HideInInspector]
     private ThirdPersonCamera mThirdPersonCamera;
 
-    private void Start()
+    public void SpawnPlayer()
     {
         Transform randomSpawnTransform = mSpawnPoints.GetSpawnPoint();
         mPlayerGameObject = PhotonNetwork.Instantiate(mPlayerPrefabName,
             randomSpawnTransform.position,
             randomSpawnTransform.rotation,
             0);
+    }
 
+    public void SetCamera()
+    {
         mThirdPersonCamera = Camera.main.gameObject.AddComponent<ThirdPersonCamera>();
 
         //mPlayerGameObject.GetComponent<PlayerMovement>().mFollowCameraForward = false;
         mThirdPersonCamera.mPlayer = mPlayerGameObject.transform;
         mThirdPersonCamera.mDamping = 20.0f;
         mThirdPersonCamera.mCameraType = CameraType.Follow_Track_Pos_Rot;
+    }
+
+
+    private void Start()
+    {
+        SpawnPlayer();
+
+        SetCamera();
+        
     }
 
     public void LeaveRoom()
