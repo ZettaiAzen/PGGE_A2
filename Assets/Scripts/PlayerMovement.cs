@@ -149,6 +149,9 @@ public class PlayerMovement : MonoBehaviour
         mVelocity.y += mGravity * Time.deltaTime;
         mCharacterController.Move(mVelocity * Time.deltaTime);
         if (mCharacterController.isGrounded && mVelocity.y < 0)
+        {
             mVelocity.y = 0f;
+        }
+            
     }
 }
