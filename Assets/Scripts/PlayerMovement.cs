@@ -18,9 +18,9 @@ public class PlayerMovement : MonoBehaviour
     public FixedJoystick mJoystick;
 #endif
 
-    private float hInput;
-    private float vInput;
+    private float hInput, vInput;
     private float speed;
+
     private bool jump = false;
     private bool crouch = false;
     public float mGravity = -30.0f;
