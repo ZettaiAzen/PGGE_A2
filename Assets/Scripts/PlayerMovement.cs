@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            crouch = !crouch;
             Crouch();
         }
     }
@@ -125,6 +124,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 tempHeight;
     void Crouch()
     {
+        crouch = !crouch;
+
         mAnimator.SetBool("Crouch", crouch);
         if (crouch)
         {
