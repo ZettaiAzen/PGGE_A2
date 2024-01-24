@@ -10,6 +10,7 @@ public class PlayerNameInput : MonoBehaviour
     private InputField mInputField;
     const string playerNamePrefKey = "PlayerName";
 
+    // putting all the name setting code into one function
     public void SetDefaultName()
     {
         string defaultName = string.Empty;

@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed;
 
     private bool jump = false;
-    private bool crouch = false;
+    private bool isCrouching = false;
     public float mGravity = -30.0f;
     public float mJumpHeight = 1.0f;
 
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        if (crouch) return;
+        if (isCrouching) return;
 
         // We shall apply movement to the game object here.
         if (mAnimator == null) return;
@@ -121,16 +121,17 @@ public class PlayerMovement : MonoBehaviour
         mVelocity.y += Mathf.Sqrt(mJumpHeight * -2f * mGravity);
     }
 
+    // combining initialisation into one line because theyre both heights
     private Vector3 HalfHeight, tempHeight;
 
     void Crouch()
     {
         // putting all crouch related variables into the function
         // changes the bool value of crouch to the opposite
-        crouch = !crouch;
+        isCrouching = !isCrouching;
 
-        mAnimator.SetBool("Crouch", crouch);
-        if (crouch)
+        mAnimator.SetBool("Crouch", isCrouching);
+        if (isCrouching)
         {
             tempHeight = CameraConstants.CameraPositionOffset;
             HalfHeight = tempHeight;
