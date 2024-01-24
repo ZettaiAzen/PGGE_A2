@@ -48,15 +48,8 @@ public class Player : MonoBehaviour
         mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
     }
 
-    void Update()
+    public void Attack()
     {
-        mFsm.Update();
-        Aim();
-
-        // For Student ----------------------------------------------------//
-        // Implement the logic of button clicks for shooting. 
-        //-----------------------------------------------------------------//
-
         if (Input.GetButton("Fire1"))
         {
             mAttackButtons[0] = true;
@@ -89,6 +82,18 @@ public class Player : MonoBehaviour
         {
             mAttackButtons[2] = false;
         }
+    }
+
+    void Update()
+    {
+        mFsm.Update();
+        Aim();
+
+        // For Student ----------------------------------------------------//
+        // Implement the logic of button clicks for shooting. 
+        //-----------------------------------------------------------------//
+        Attack();
+        
     }
 
     public void Aim()
