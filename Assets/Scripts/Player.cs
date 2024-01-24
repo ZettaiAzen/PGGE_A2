@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
         mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
     }
 
+    // putting all the inputs for attack into one function
     public void Attack()
     {
         if (Input.GetButton("Fire1"))

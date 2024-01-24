@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public FixedJoystick mJoystick;
 #endif
 
+    //initialising together since theyre both input
     private float hInput, vInput;
     private float speed;
 
@@ -124,6 +125,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Crouch()
     {
+        // putting all crouch related variables into the function
+        // changes the bool value of crouch to the opposite
         crouch = !crouch;
 
         mAnimator.SetBool("Crouch", crouch);

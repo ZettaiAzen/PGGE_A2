@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameApp : Singleton<GameApp>
 {
+    // changed bool to starting with lowercase since its a variable not a constant
     public bool gamePaused;
 
     void Start()
@@ -24,9 +25,12 @@ public class GameApp : Singleton<GameApp>
         }
     }
 
+    // changed pausing into a function
     public void PauseGame()
     {
+        // changes the variable of gamePaused to the opposite
         gamePaused = !gamePaused;
+        // sets the timescale to 0 if game is paused and 1 if game is not paused
         Time.timeScale = gamePaused ? 0 : 1;
     }
 

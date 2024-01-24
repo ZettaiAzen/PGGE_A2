@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             0);
     }
 
+    // putting all camera related initialisation into one function
     public void SetCamera()
     {
         mThirdPersonCamera = Camera.main.gameObject.AddComponent<ThirdPersonCamera>();

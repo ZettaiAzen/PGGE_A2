@@ -10,11 +10,8 @@ public class PlayerNameInput : MonoBehaviour
     private InputField mInputField;
     const string playerNamePrefKey = "PlayerName";
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetDefaultName()
     {
-        mInputField = this.GetComponent<InputField>();
-
         string defaultName = string.Empty;
         if (mInputField != null)
         {
@@ -25,6 +22,15 @@ public class PlayerNameInput : MonoBehaviour
             }
         }
         PhotonNetwork.NickName = defaultName;
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        mInputField = this.GetComponent<InputField>();
+
+        SetDefaultName();
+        
     }
 
     public void SetPlayerName()
