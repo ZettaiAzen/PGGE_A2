@@ -47,8 +47,6 @@ public class PlayerSound : MonoBehaviour
 
         GettingFloorType();
 
-        Debug.Log("Floor is: " + materialTag);
-
         //checking what material it is
         switch (materialTag)
         {
@@ -140,8 +138,6 @@ public class PlayerSound : MonoBehaviour
         AudioClip clip;
 
         GettingFloorType();
-
-        Debug.Log("Floor is: " + materialTag);
 
         //checking what material it is
         switch (materialTag)

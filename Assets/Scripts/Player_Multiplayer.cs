@@ -53,17 +53,8 @@ public class Player_Multiplayer : MonoBehaviour
         mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
     }
 
-    void Update()
+    public void Attack()
     {
-        if (!mPhotonView.IsMine) return;
-
-        mFsm.Update();
-        Aim();
-
-        // For Student ----------------------------------------------------//
-        // Implement the logic of button clicks for shooting. 
-        //-----------------------------------------------------------------//
-
         if (Input.GetButton("Fire1"))
         {
             mAttackButtons[0] = true;
@@ -96,6 +87,20 @@ public class Player_Multiplayer : MonoBehaviour
         {
             mAttackButtons[2] = false;
         }
+    }
+
+    void Update()
+    {
+        if (!mPhotonView.IsMine) return;
+
+        mFsm.Update();
+        Aim();
+
+        // For Student ----------------------------------------------------//
+        // Implement the logic of button clicks for shooting. 
+        //-----------------------------------------------------------------//
+
+        Attack();
     }
 
     public void Aim()

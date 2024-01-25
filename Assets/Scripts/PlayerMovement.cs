@@ -18,11 +18,12 @@ public class PlayerMovement : MonoBehaviour
     public FixedJoystick mJoystick;
 #endif
 
-    private float hInput;
-    private float vInput;
+    //initialising together since theyre both input
+    private float hInput, vInput;
     private float speed;
+
     private bool jump = false;
-    private bool crouch = false;
+    private bool isCrouching = false;
     public float mGravity = -30.0f;
     public float mJumpHeight = 1.0f;
 
@@ -75,14 +76,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            crouch = !crouch;
             Crouch();
         }
     }
 
     public void Move()
     {
-        if (crouch) return;
+        if (isCrouching) return;
 
         // We shall apply movement to the game object here.
         if (mAnimator == null) return;
@@ -121,12 +121,17 @@ public class PlayerMovement : MonoBehaviour
         mVelocity.y += Mathf.Sqrt(mJumpHeight * -2f * mGravity);
     }
 
-    private Vector3 HalfHeight;
-    private Vector3 tempHeight;
+    // combining initialisation into one line because theyre both heights
+    private Vector3 HalfHeight, tempHeight;
+
     void Crouch()
     {
-        mAnimator.SetBool("Crouch", crouch);
-        if (crouch)
+        // putting all crouch related variables into the function
+        // changes the bool value of crouch to the opposite
+        isCrouching = !isCrouching;
+
+        mAnimator.SetBool("Crouch", isCrouching);
+        if (isCrouching)
         {
             tempHeight = CameraConstants.CameraPositionOffset;
             HalfHeight = tempHeight;
@@ -148,6 +153,9 @@ public class PlayerMovement : MonoBehaviour
         mVelocity.y += mGravity * Time.deltaTime;
         mCharacterController.Move(mVelocity * Time.deltaTime);
         if (mCharacterController.isGrounded && mVelocity.y < 0)
+        {
             mVelocity.y = 0f;
+        }
+            
     }
 }

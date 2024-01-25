@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
     IEnumerator playSound_LoadScene(string sceneName)
     {
         // playing sound
-        Debug.Log("im making sound for " + sceneName);
+        //Debug.Log("im making sound for " + sceneName);
 
         // checking which button this is and playing the right sound
         switch (sceneName)

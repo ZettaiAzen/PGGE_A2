@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameApp : Singleton<GameApp>
 {
-    private bool mPause;
+    // changed bool to starting with lowercase since its a variable not a constant
+    public bool gamePaused;
 
     void Start()
     {
-        mPause = false;
+        gamePaused = false;
         SceneManager.LoadScene("Menu");
     }
 
@@ -19,28 +20,20 @@ public class GameApp : Singleton<GameApp>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            GamePaused = !GamePaused;
+            
+            PauseGame();
         }
     }
 
-    public bool GamePaused
+    // changed pausing into a function
+    public void PauseGame()
     {
-        get { return mPause; }
-        set
-        {
-            mPause = value;
-            //mOnPause?.Invoke(GamePaused);
-            if (GamePaused)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1;
-            }
-        }
-    }    
-    
+        // changes the variable of gamePaused to the opposite
+        gamePaused = !gamePaused;
+        // sets the timescale to 0 if game is paused and 1 if game is not paused
+        Time.timeScale = gamePaused ? 0 : 1;
+    }
+
     // called first
     void OnEnable()
     {
